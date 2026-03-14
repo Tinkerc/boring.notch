@@ -81,6 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             screenUnlockedObserver = nil
         }
         MusicManager.shared.destroy()
+        ClaudeTasksManager.shared.stopMonitoring()
         cleanupDragDetectors()
         cleanupWindows()
         XPCHelperClient.shared.stopMonitoringAccessibilityAuthorization()
@@ -419,6 +420,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         setupDragDetectors()
+
+        // Start Claude Tasks monitoring
+        if Defaults[.claudeTasksEnabled] {
+            ClaudeTasksManager.shared.startMonitoring()
+        }
 
         if coordinator.firstLaunch {
             DispatchQueue.main.async {
