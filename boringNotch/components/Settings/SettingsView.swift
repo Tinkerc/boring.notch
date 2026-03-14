@@ -54,6 +54,9 @@ struct SettingsView: View {
                 NavigationLink(value: "Shortcuts") {
                     Label("Shortcuts", systemImage: "keyboard")
                 }
+                NavigationLink(value: "Apps") {
+                    Label("Apps", systemImage: "app.badge.fill")
+                }
                 // NavigationLink(value: "Extensions") {
                 //     Label("Extensions", systemImage: "puzzlepiece.extension")
                 // }
@@ -87,6 +90,8 @@ struct SettingsView: View {
                     Shelf()
                 case "Shortcuts":
                     Shortcuts()
+                case "Apps":
+                    AppsSettingsView()
                 case "Extensions":
                     GeneralSettings()
                 case "Advanced":
@@ -1649,8 +1654,9 @@ struct Advanced: View {
                     get: { Defaults[.claudeTasksOpenWith] },
                     set: { Defaults[.claudeTasksOpenWith] = $0 }
                 )) {
-                    Text("Surf").tag(ClaudeTasksOpenWith.surf)
                     Text("Finder").tag(ClaudeTasksOpenWith.finder)
+                    Text("Ghostty").tag(ClaudeTasksOpenWith.ghostty)
+                    Text("Surf").tag(ClaudeTasksOpenWith.surf)
                     Text("VS Code").tag(ClaudeTasksOpenWith.vscode)
                 }
             } header: {
