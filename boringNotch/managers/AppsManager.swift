@@ -24,6 +24,7 @@ class AppsManager: ObservableObject {
         }
     }
 
+    // Fallback common apps for quick access (used if /Applications scan fails)
     private let commonApps = [
         "com.apple.Safari",
         "com.google.Chrome",
@@ -59,20 +60,51 @@ class AppsManager: ObservableObject {
 
     func discoverApps() {
         var apps: [AppEntry] = []
+        let appDirectories = [
+            FileManager.default.urls(for: .applicationDirectory, in: .localDomainMask).first?.path,
+            FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).first?.path,
+            "/Applications/Setapp"
+        ].compactMap { $0 }
 
-        for bundleID in commonApps {
-            if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
-                if let bundle = Bundle(url: url) {
-                    let name = bundle.infoDictionary?["CFBundleName"] as? String
-                        ?? bundle.infoDictionary?["CFBundleDisplayName"] as? String
-                        ?? (bundleID as NSString).lastPathComponent.replacingOccurrences(of: ".app", with: "")
+        var foundBundleIDs: Set<String> = []
 
-                    apps.append(AppEntry(bundleID: bundleID, displayName: name, path: url.path))
+        for dirPath in appDirectories {
+            guard let urls = FileManager.default.enumerator(at: URL(fileURLWithPath: dirPath), includingPropertiesForKeys: nil)?.compactMap({ $0 as? URL }) else {
+                continue
+            }
+
+            for url in urls where url.pathExtension == "app" {
+                guard let bundle = Bundle(url: url),
+                      let bundleID = bundle.bundleIdentifier,
+                      !foundBundleIDs.contains(bundleID) else {
+                    continue
+                }
+
+                let name = bundle.infoDictionary?["CFBundleName"] as? String
+                    ?? bundle.infoDictionary?["CFBundleDisplayName"] as? String
+                    ?? url.deletingPathExtension().lastPathComponent
+
+                foundBundleIDs.insert(bundleID)
+                apps.append(AppEntry(bundleID: bundleID, displayName: name, path: url.path))
+            }
+        }
+
+        // Fallback to common apps if no apps found
+        if apps.isEmpty {
+            for bundleID in commonApps {
+                if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
+                    if let bundle = Bundle(url: url) {
+                        let name = bundle.infoDictionary?["CFBundleName"] as? String
+                            ?? bundle.infoDictionary?["CFBundleDisplayName"] as? String
+                            ?? (bundleID as NSString).lastPathComponent.replacingOccurrences(of: ".app", with: "")
+
+                        apps.append(AppEntry(bundleID: bundleID, displayName: name, path: url.path))
+                    }
                 }
             }
         }
 
-        discoveredApps = apps
+        discoveredApps = apps.sorted { $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending }
     }
 
     func addFavorite(_ bundleID: String) {
