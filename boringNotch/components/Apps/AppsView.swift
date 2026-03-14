@@ -2,12 +2,7 @@ import SwiftUI
 
 struct AppsView: View {
     @StateObject private var appsManager = AppsManager.shared
-    private let columns = [
-        GridItem(.fixed(80), spacing: 12),
-        GridItem(.fixed(80), spacing: 12),
-        GridItem(.fixed(80), spacing: 12),
-        GridItem(.fixed(80), spacing: 12)
-    ]
+    private let columns = Array(repeating: GridItem(.fixed(60), spacing: 8), count: 8)
 
     var body: some View {
         Group {

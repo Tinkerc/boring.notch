@@ -30,13 +30,16 @@ struct ClaudeTasksExpandedView: View {
             }
 
             // Paginated cards
-            TabView(selection: $currentPage) {
-                ForEach(Array(repoGroups.enumerated()), id: \.element.repo) { index, group in
+            Group {
+                if repoGroups.isEmpty {
+                    Text("No tasks")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                } else {
+                    let group = repoGroups[currentPage % repoGroups.count]
                     RepoPageCard(repo: group.repo, tasks: group.tasks, cwd: group.cwd)
-                        .tag(index)
                 }
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeInOut, value: currentPage)
 
             // Footer stats
@@ -65,6 +68,8 @@ struct ClaudeTasksExpandedView: View {
                 .buttonStyle(PlainButtonStyle())
             }
         }
-        .padding(10)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.horizontal, 10)
+        .padding(.bottom, 10)
     }
 }

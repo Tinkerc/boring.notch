@@ -1,11 +1,13 @@
 import SwiftUI
 import AppKit
+import Defaults
 
 /// Repository group card for paginated expanded view
 struct RepoPageCard: View {
     let repo: String
     let tasks: [ClaudeTask]
     let cwd: String
+    @Default(.claudeTasksOpenWith) var openWith
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -17,7 +19,7 @@ struct RepoPageCard: View {
                     .font(.caption)
                     .fontWeight(.semibold)
                 Spacer()
-                Button(action: openInSurf) {
+                Button(action: openDirectory) {
                     Image(systemName: "arrow.up.right.square")
                         .font(.system(size: 10))
                 }
@@ -39,8 +41,7 @@ struct RepoPageCard: View {
         )
     }
 
-    private func openInSurf() {
-        guard let url = URL(string: "surf://open?path=\(cwd)") else { return }
-        NSWorkspace.shared.open(url)
+    private func openDirectory() {
+        openWith.open(path: cwd)
     }
 }

@@ -12,7 +12,6 @@ struct TaskRow: View {
             Text(task.task)
                 .font(.caption)
                 .lineLimit(1)
-                .truncationStrategy(.tail)
 
             Spacer()
 

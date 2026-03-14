@@ -46,7 +46,6 @@ struct ClaudeTasksOverlay: View {
             Text(task.task)
                 .font(.caption)
                 .lineLimit(2)
-                .truncationStrategy(.tail)
 
             Text(task.repo)
                 .font(.caption2)

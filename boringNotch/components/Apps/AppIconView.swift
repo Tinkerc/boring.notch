@@ -10,31 +10,31 @@ struct AppIconView: View {
 
     var body: some View {
         Button(action: onLaunch) {
-            VStack(spacing: 8) {
+            VStack(spacing: 4) {
                 if let icon = icon {
                     Image(nsImage: icon)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 64, height: 64)
+                        .frame(width: 42, height: 42)
                         .shadow(radius: 2)
                 } else {
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: 8)
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: 64, height: 64)
+                        .frame(width: 42, height: 42)
                         .overlay(
                             Image(systemName: "app.badge")
                                 .foregroundColor(.gray)
-                                .font(.system(size: 24))
+                                .font(.system(size: 16))
                         )
                 }
 
                 Text(displayName)
-                    .font(.system(size: 11))
+                    .font(.system(size: 10))
                     .foregroundColor(.white)
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
-            .frame(width: 80)
+            .frame(width: 60)
         }
         .buttonStyle(PlainButtonStyle())
         .onAppear {

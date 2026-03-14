@@ -17,10 +17,14 @@ struct MusicPlayerView: View {
     let albumArtNamespace: Namespace.ID
 
     var body: some View {
-        HStack {
-            AlbumArtView(vm: vm, albumArtNamespace: albumArtNamespace).padding(.all, 5)
-            MusicControlsView().drawingGroup().compositingGroup()
+        HStack(spacing: 10) {
+            AlbumArtView(vm: vm, albumArtNamespace: albumArtNamespace)
+            MusicControlsView()
+                .drawingGroup()
+                .compositingGroup()
         }
+        .padding(.vertical, 5)  // Reduced vertical padding
+        .frame(minHeight: 100)  // Ensure minimum height for music player
     }
 }
 
@@ -120,7 +124,7 @@ struct MusicControlsView: View {
     @Default(.musicControlSlotLimit) private var slotLimit
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             songInfoAndSlider
             slotToolbar
         }
@@ -130,7 +134,7 @@ struct MusicControlsView: View {
     private var songInfoAndSlider: some View {
         GeometryReader { geo in
             VStack(alignment: .leading, spacing: 4) {
-                songInfo(width: geo.size.width)
+                songInfo(width: geo.size.width - 10)  // Subtract padding to prevent overflow
                 musicSlider
             }
         }
@@ -427,18 +431,22 @@ struct NotchHomeView: View {
     let albumArtNamespace: Namespace.ID
 
     var body: some View {
-        Group {
-            if !coordinator.firstLaunch {
+        ZStack(alignment: .top) {
+            // Main content - base layer (hidden when Claude Tasks is shown)
+            if claudeTasksManager.hasTasks && Defaults[.claudeTasksEnabled] {
+                // Empty placeholder to maintain frame consistency
+                Color.clear
+            } else if !coordinator.firstLaunch {
                 mainContent
             }
-        }
-        .overlay(
-            // Show Claude Tasks expanded view when notch is open and tasks exist
+
+            // Claude Tasks overlay - positioned at top independently
             if vm.notchState == .open && claudeTasksManager.hasTasks && Defaults[.claudeTasksEnabled] {
                 ClaudeTasksExpandedView()
                     .transition(.opacity)
             }
-        )
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         // simplified: use a straightforward opacity transition
         .transition(.opacity)
     }
@@ -471,6 +479,7 @@ struct NotchHomeView: View {
                     .animation(.interactiveSpring(response: 0.32, dampingFraction: 0.76, blendDuration: 0), value: shouldShowCamera)
             }
         }
+        .frame(minHeight: 120)  // Set minimum height to match ShelfView
         .transition(.asymmetric(insertion: .opacity.combined(with: .move(edge: .top)), removal: .opacity))
         .blur(radius: vm.notchState == .closed ? 30 : 0)
     }
