@@ -105,7 +105,10 @@ class AppsManager: ObservableObject {
     }
 
     func launchApp(bundleID: String) {
-        NSWorkspace.shared.launchApplication(withBundleIdentifier: bundleID, options: [])
+        guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else {
+            return
+        }
+        NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration())
     }
 
     func getAppIcon(bundleID: String) -> NSImage? {

@@ -106,15 +106,22 @@
 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
 		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
 		14FC6E502C7DED5600C7BEA5 /* DataTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */; };
+		16DF922141B49CAAA35F1495 /* PaginationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34B618F13AC920D40FFF268 /* PaginationControl.swift */; };
+		1D732C945178DDD5E6A9101D /* ClaudeTasksOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722B5E8FF4F87B4D17DE205A /* ClaudeTasksOverlay.swift */; };
 		507266DB2C908E2E00A2D00D /* HoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507266DA2C908E2E00A2D00D /* HoverButton.swift */; };
+		5296A81CF6EFA0025CCE4857 /* RepoPageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9357DBF4E266681698C8B0D3 /* RepoPageCard.swift */; };
 		5917FD112E57891600E87F1C /* MediaKeyInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917FD102E57891600E87F1C /* MediaKeyInterceptor.swift */; };
 		5955950D2E900ED800C66711 /* ApplicationRelauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5955950C2E900ED800C66711 /* ApplicationRelauncher.swift */; };
 		59D8C23C2E589FAA00147B33 /* VolumeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D8C23B2E589FAA00147B33 /* VolumeManager.swift */; };
+		5CFC0B307EE8D91300A21226 /* ClaudeTasksExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A1ECACE099B8F88AF58762 /* ClaudeTasksExpandedView.swift */; };
+		659ABAB63BCAEC2F392C4B39 /* ClaudeTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FE1E1CC3C63A3E91522ED /* ClaudeTask.swift */; };
+		7C18445662B5FC21F78FEF86 /* ClaudeTasksBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0FAD3DB60D44426109F65 /* ClaudeTasksBadge.swift */; };
 		9A0887322C7A693000C160EA /* TabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0887312C7A693000C160EA /* TabButton.swift */; };
 		9A0887352C7AFF8E00C160EA /* TabSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0887342C7AFF8E00C160EA /* TabSelectionView.swift */; };
 		9A987A0D2C73CA66005CA465 /* ShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A987A032C73CA66005CA465 /* ShelfView.swift */; };
 		9A987A102C73CA8D005CA465 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A987A0F2C73CA8D005CA465 /* Collections */; };
 		9AB0C6BD2C73C9CB00F7CD30 /* NotchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */; };
+		A49E6B25A28E6EED978118FB /* ClaudeTasksDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEC56CCDBEF3E9F16AACACB /* ClaudeTasksDefaults.swift */; };
 		B10348D92C74E56000475897 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10348D82C74E56000475897 /* ConditionalModifier.swift */; };
 		B10F84A32C6C9596009F3026 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F84A22C6C9596009F3026 /* TestView.swift */; };
 		B141C2412CA5F53F00AC8CC8 /* SparkleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B141C2402CA5F53E00AC8CC8 /* SparkleView.swift */; };
@@ -142,7 +149,14 @@
 		B1F0A0022E60000100000001 /* BrightnessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F0A0012E60000100000001 /* BrightnessManager.swift */; };
 		B1F747F92EC7E94000F841DB /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F747F82EC7E94000F841DB /* LottieView.swift */; };
 		B1FEB4992C7686630066EBBC /* PanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FEB4982C7686630066EBBC /* PanGesture.swift */; };
+		C1F7DB3AF70E3AAC21F0EEA0 /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C753B55BC4BA9E85B0C48 /* TaskRow.swift */; };
+		F158D392015B582DB2A5F5A3 /* ClaudeTasksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1A9298D4F43710359FE518C /* ClaudeTasksManager.swift */; };
 		F38DE6482D8243E7008B5C6D /* BatteryActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */; };
+		15A000012E00000100000011 /* AppsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A000012E00000100000001 /* AppsManager.swift */; };
+		15A000012E00000100000012 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A000012E00000100000002 /* AppsView.swift */; };
+		15A000012E00000100000013 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A000012E00000100000003 /* AppIconView.swift */; };
+		15A000012E00000100000014 /* AppsEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A000012E00000100000004 /* AppsEmptyState.swift */; };
+		15A000012E00000100000015 /* AppsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A000012E00000100000005 /* AppsSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,6 +273,11 @@
 		14CEF4122C5CAED300855D72 /* boringNotch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boringNotch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14CEF4152C5CAED300855D72 /* boringNotchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = boringNotchApp.swift; sourceTree = "<group>"; };
 		14CEF4172C5CAED300855D72 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		15A000012E00000100000001 /* AppsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsManager.swift; sourceTree = "<group>"; };
+		15A000012E00000100000002 /* AppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
+		15A000012E00000100000003 /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
+		15A000012E00000100000004 /* AppsEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsEmptyState.swift; sourceTree = "<group>"; };
+		15A000012E00000100000005 /* AppsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsSettingsView.swift; sourceTree = "<group>"; };
 		14CEF4192C5CAED400855D72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14CEF41C2C5CAED400855D72 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		14CEF41E2C5CAED400855D72 /* boringNotch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = boringNotch.entitlements; sourceTree = "<group>"; };
@@ -276,14 +295,23 @@
 		14E9FEA92C70BF610062E83F /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
 		14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Bouncing.swift"; sourceTree = "<group>"; };
 		14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataTypes+Extensions.swift"; sourceTree = "<group>"; };
+		46E0FAD3DB60D44426109F65 /* ClaudeTasksBadge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeTasksBadge.swift; path = ClaudeTasks/ClaudeTasksBadge.swift; sourceTree = "<group>"; };
+		48A1ECACE099B8F88AF58762 /* ClaudeTasksExpandedView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeTasksExpandedView.swift; path = ClaudeTasks/ClaudeTasksExpandedView.swift; sourceTree = "<group>"; };
 		507266DA2C908E2E00A2D00D /* HoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverButton.swift; sourceTree = "<group>"; };
+		549C753B55BC4BA9E85B0C48 /* TaskRow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskRow.swift; path = ClaudeTasks/TaskRow.swift; sourceTree = "<group>"; };
 		5917FD102E57891600E87F1C /* MediaKeyInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeyInterceptor.swift; sourceTree = "<group>"; };
 		5955950C2E900ED800C66711 /* ApplicationRelauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationRelauncher.swift; sourceTree = "<group>"; };
 		59D8C23B2E589FAA00147B33 /* VolumeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeManager.swift; sourceTree = "<group>"; };
+		6EEC56CCDBEF3E9F16AACACB /* ClaudeTasksDefaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeTasksDefaults.swift; sourceTree = "<group>"; };
+		722B5E8FF4F87B4D17DE205A /* ClaudeTasksOverlay.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeTasksOverlay.swift; path = ClaudeTasks/ClaudeTasksOverlay.swift; sourceTree = "<group>"; };
+		9357DBF4E266681698C8B0D3 /* RepoPageCard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RepoPageCard.swift; path = ClaudeTasks/RepoPageCard.swift; sourceTree = "<group>"; };
 		9A0887312C7A693000C160EA /* TabButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButton.swift; sourceTree = "<group>"; };
 		9A0887342C7AFF8E00C160EA /* TabSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectionView.swift; sourceTree = "<group>"; };
 		9A987A032C73CA66005CA465 /* ShelfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShelfView.swift; sourceTree = "<group>"; };
 		9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotchHomeView.swift; sourceTree = "<group>"; };
+		9B6FE1E1CC3C63A3E91522ED /* ClaudeTask.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeTask.swift; sourceTree = "<group>"; };
+		A1A9298D4F43710359FE518C /* ClaudeTasksManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeTasksManager.swift; sourceTree = "<group>"; };
+		A34B618F13AC920D40FFF268 /* PaginationControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaginationControl.swift; path = ClaudeTasks/PaginationControl.swift; sourceTree = "<group>"; };
 		B10348D82C74E56000475897 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
 		B10F84A22C6C9596009F3026 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		B141C2402CA5F53E00AC8CC8 /* SparkleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleView.swift; sourceTree = "<group>"; };
@@ -312,7 +340,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		11F7485C2EC9AABA00F841DB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		11F7485C2EC9AABA00F841DB /* Exceptions for "BoringNotchXPCHelper" folder in "BoringNotchXPCHelper" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -322,8 +350,29 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		112FB72F2CCF12CC0015238C /* private */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = private; sourceTree = "<group>"; };
-		11F748502EC9AABA00F841DB /* BoringNotchXPCHelper */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (11F7485C2EC9AABA00F841DB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = BoringNotchXPCHelper; sourceTree = "<group>"; };
+		112FB72F2CCF12CC0015238C /* private */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = private;
+			sourceTree = "<group>";
+		};
+		11F748502EC9AABA00F841DB /* BoringNotchXPCHelper */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				11F7485C2EC9AABA00F841DB /* Exceptions for "BoringNotchXPCHelper" folder in "BoringNotchXPCHelper" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = BoringNotchXPCHelper;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -496,6 +545,7 @@
 				B186542F2C6F455E000B926A /* Notch */,
 				9A0887332C7AFF7E00C160EA /* Tabs */,
 				B186542E2C6F453B000B926A /* Music */,
+				15A000012E00000100000020 /* Apps */,
 				14D570BF2C5EA5870011E668 /* AnimatedFace.swift */,
 				14288DE72C6E01C800B9F80C /* ProgressIndicator.swift */,
 				14D570C12C5EAFBF0011E668 /* EmptyState.swift */,
@@ -503,8 +553,19 @@
 				B10F84A22C6C9596009F3026 /* TestView.swift */,
 				507266DA2C908E2E00A2D00D /* HoverButton.swift */,
 				B1F747F82EC7E94000F841DB /* LottieView.swift */,
+				BEABE88F709D97559C33A262 /* ClaudeTasks */,
 			);
 			path = components;
+			sourceTree = "<group>";
+		};
+		15A000012E00000100000020 /* Apps */ = {
+			isa = PBXGroup;
+			children = (
+				15A000012E00000100000002 /* AppsView.swift */,
+				15A000012E00000100000003 /* AppIconView.swift */,
+				15A000012E00000100000004 /* AppsEmptyState.swift */,
+			);
+			path = Apps;
 			sourceTree = "<group>";
 		};
 		147163B52C5D804B0068B555 /* managers */ = {
@@ -518,6 +579,8 @@
 				14C08BB52C8DE42D000F8AA0 /* CalendarManager.swift */,
 				B1F0A0012E60000100000001 /* BrightnessManager.swift */,
 				59D8C23B2E589FAA00147B33 /* VolumeManager.swift */,
+				A1A9298D4F43710359FE518C /* ClaudeTasksManager.swift */,
+				15A000012E00000100000001 /* AppsManager.swift */,
 			);
 			path = managers;
 			sourceTree = "<group>";
@@ -634,6 +697,7 @@
 				14D570C82C5F38890011E668 /* BoringViewModel.swift */,
 				14D570CA2C5F4B2C0011E668 /* BatteryStatusViewModel.swift */,
 				1153BD902D986DB300979FB0 /* PlaybackState.swift */,
+				9B6FE1E1CC3C63A3E91522ED /* ClaudeTask.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -688,6 +752,7 @@
 				B1FEB4982C7686630066EBBC /* PanGesture.swift */,
 				14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */,
 				B1C448952C9712C4001F0858 /* ActionBar.swift */,
+				6EEC56CCDBEF3E9F16AACACB /* ClaudeTasksDefaults.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -723,6 +788,7 @@
 				B1D6FD422C6603730015F173 /* SoftwareUpdater.swift */,
 				B1B112902C6A572100093D8F /* EditPanelView.swift */,
 				B1C448972C972CC4001F0858 /* ListItemPopover.swift */,
+				15A000012E00000100000005 /* AppsSettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -757,6 +823,19 @@
 			path = Tips;
 			sourceTree = "<group>";
 		};
+		BEABE88F709D97559C33A262 /* ClaudeTasks */ = {
+			isa = PBXGroup;
+			children = (
+				46E0FAD3DB60D44426109F65 /* ClaudeTasksBadge.swift */,
+				722B5E8FF4F87B4D17DE205A /* ClaudeTasksOverlay.swift */,
+				48A1ECACE099B8F88AF58762 /* ClaudeTasksExpandedView.swift */,
+				A34B618F13AC920D40FFF268 /* PaginationControl.swift */,
+				9357DBF4E266681698C8B0D3 /* RepoPageCard.swift */,
+				549C753B55BC4BA9E85B0C48 /* TaskRow.swift */,
+			);
+			name = ClaudeTasks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -776,8 +855,6 @@
 				11F748502EC9AABA00F841DB /* BoringNotchXPCHelper */,
 			);
 			name = BoringNotchXPCHelper;
-			packageProductDependencies = (
-			);
 			productName = BoringNotchXPCHelper;
 			productReference = 11F7484F2EC9AABA00F841DB /* BoringNotchXPCHelper.xpc */;
 			productType = "com.apple.product-type.xpc-service";
@@ -1020,6 +1097,20 @@
 				1100290C2E847E2800035A57 /* NSItemProvider+LoadHelpers.swift in Sources */,
 				11CFC6632E09918400748C80 /* MusicControllerSelectionView.swift in Sources */,
 				B1F0A0022E60000100000001 /* BrightnessManager.swift in Sources */,
+				659ABAB63BCAEC2F392C4B39 /* ClaudeTask.swift in Sources */,
+				F158D392015B582DB2A5F5A3 /* ClaudeTasksManager.swift in Sources */,
+				7C18445662B5FC21F78FEF86 /* ClaudeTasksBadge.swift in Sources */,
+				1D732C945178DDD5E6A9101D /* ClaudeTasksOverlay.swift in Sources */,
+				5CFC0B307EE8D91300A21226 /* ClaudeTasksExpandedView.swift in Sources */,
+				16DF922141B49CAAA35F1495 /* PaginationControl.swift in Sources */,
+				5296A81CF6EFA0025CCE4857 /* RepoPageCard.swift in Sources */,
+				C1F7DB3AF70E3AAC21F0EEA0 /* TaskRow.swift in Sources */,
+				A49E6B25A28E6EED978118FB /* ClaudeTasksDefaults.swift in Sources */,
+				15A000012E00000100000011 /* AppsManager.swift in Sources */,
+				15A000012E00000100000012 /* AppsView.swift in Sources */,
+				15A000012E00000100000013 /* AppIconView.swift in Sources */,
+				15A000012E00000100000014 /* AppsEmptyState.swift in Sources */,
+				15A000012E00000100000015 /* AppsSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
