@@ -7,6 +7,7 @@ struct AppIconView: View {
     let onLaunch: () -> Void
 
     @State private var icon: NSImage?
+    private let appsManager = AppsManager.shared
 
     var body: some View {
         Button(action: onLaunch) {
@@ -43,7 +44,14 @@ struct AppIconView: View {
     }
 
     private func loadIcon() {
-        if let loadedIcon = AppsManager.shared.getAppIcon(bundleID: bundleID) {
+        // Check cache first
+        if let cachedIcon = appsManager.iconCache[bundleID] {
+            icon = cachedIcon
+            return
+        }
+
+        // Load and cache icon
+        if let loadedIcon = appsManager.getAppIcon(bundleID: bundleID) {
             icon = loadedIcon
         }
     }

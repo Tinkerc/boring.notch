@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AppsView: View {
-    @StateObject private var appsManager = AppsManager.shared
+    private let appsManager = AppsManager.shared
     private let columns = Array(repeating: GridItem(.fixed(60), spacing: 8), count: 8)
 
     var body: some View {
@@ -26,6 +26,9 @@ struct AppsView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            appsManager.discoverApps()
+        }
     }
 }
 

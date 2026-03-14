@@ -8,6 +8,7 @@ class AppsManager: ObservableObject {
 
     @Published var favoriteApps: [String] = []
     @Published var discoveredApps: [AppEntry] = []
+    @Published var iconCache: [String: NSImage] = [:]
 
     struct AppEntry: Identifiable, Hashable {
         let id = UUID()
@@ -144,11 +145,20 @@ class AppsManager: ObservableObject {
     }
 
     func getAppIcon(bundleID: String) -> NSImage? {
+        // Return cached icon if available
+        if let cachedIcon = iconCache[bundleID] {
+            return cachedIcon
+        }
+
         guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else {
             return nil
         }
         let icon = NSWorkspace.shared.icon(forFile: url.path)
         icon.size = NSSize(width: 64, height: 64)
+
+        // Cache the icon
+        iconCache[bundleID] = icon
+
         return icon
     }
 }
