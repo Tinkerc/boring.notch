@@ -87,11 +87,17 @@ struct ContentView: View {
             let scaleFactor = 1.0 + gestureProgress * 0.01
             return max(0.6, scaleFactor)
         }()
-        
+
         ZStack(alignment: .top) {
             VStack(spacing: 0) {
                 let mainLayout = NotchLayout()
                     .frame(alignment: .top)
+            .overlay(
+                // Claude Tasks island overlay for closed notch notifications
+                if Defaults[.claudeTasksEnabled] {
+                    ClaudeTasksOverlay()
+                }
+            )
                     .padding(
                         .horizontal,
                         vm.notchState == .open
@@ -287,9 +293,26 @@ struct ContentView: View {
                               .transition(.opacity)
                       } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music) && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle) && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed {
                           MusicLiveActivity()
-                              .frame(alignment: .center)
+                              .overlay(
+                                  // Claude Tasks badge overlay
+                                  Group {
+                                      if Defaults[.claudeTasksEnabled] && ClaudeTasksManager.shared.hasTasks {
+                                          ClaudeTasksBadge()
+                                              .padding(.trailing, 8)
+                                      }
+                                  }
+                              )
                       } else if !coordinator.expandingView.show && vm.notchState == .closed && (!musicManager.isPlaying && musicManager.isPlayerIdle) && Defaults[.showNotHumanFace] && !vm.hideOnClosed  {
                           BoringFaceAnimation()
+                              .overlay(
+                                  // Claude Tasks badge when no music playing
+                                  Group {
+                                      if Defaults[.claudeTasksEnabled] && ClaudeTasksManager.shared.hasTasks {
+                                          ClaudeTasksBadge()
+                                              .padding(.trailing, 8)
+                                      }
+                                  }
+                              )
                        } else if vm.notchState == .open {
                            BoringHeader()
                                .frame(height: max(24, vm.effectiveClosedNotchHeight))

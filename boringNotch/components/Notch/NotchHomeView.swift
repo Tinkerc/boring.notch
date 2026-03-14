@@ -423,6 +423,7 @@ struct NotchHomeView: View {
     @ObservedObject var webcamManager = WebcamManager.shared
     @ObservedObject var batteryModel = BatteryStatusViewModel.shared
     @ObservedObject var coordinator = BoringViewCoordinator.shared
+    @ObservedObject var claudeTasksManager = ClaudeTasksManager.shared
     let albumArtNamespace: Namespace.ID
 
     var body: some View {
@@ -431,6 +432,13 @@ struct NotchHomeView: View {
                 mainContent
             }
         }
+        .overlay(
+            // Show Claude Tasks expanded view when notch is open and tasks exist
+            if vm.notchState == .open && claudeTasksManager.hasTasks && Defaults[.claudeTasksEnabled] {
+                ClaudeTasksExpandedView()
+                    .transition(.opacity)
+            }
+        )
         // simplified: use a straightforward opacity transition
         .transition(.opacity)
     }
@@ -441,7 +449,9 @@ struct NotchHomeView: View {
 
     private var mainContent: some View {
         HStack(alignment: .top, spacing: (shouldShowCamera && Defaults[.showCalendar]) ? 10 : 15) {
-            MusicPlayerView(albumArtNamespace: albumArtNamespace)
+            if !claudeTasksManager.hasTasks || !Defaults[.claudeTasksEnabled] {
+                MusicPlayerView(albumArtNamespace: albumArtNamespace)
+            }
 
             if Defaults[.showCalendar] {
                 CalendarView()
