@@ -26,9 +26,6 @@ struct AppsView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            appsManager.discoverApps()
-        }
     }
 }
 

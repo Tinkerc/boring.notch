@@ -10,6 +10,8 @@ class AppsManager: ObservableObject {
     @Published var discoveredApps: [AppEntry] = []
     @Published var iconCache: [String: NSImage] = [:]
 
+    private var hasDiscoveredApps = false
+
     struct AppEntry: Identifiable, Hashable {
         let id = UUID()
         let bundleID: String
@@ -60,52 +62,64 @@ class AppsManager: ObservableObject {
     }
 
     func discoverApps() {
-        var apps: [AppEntry] = []
-        let appDirectories = [
-            FileManager.default.urls(for: .applicationDirectory, in: .localDomainMask).first?.path,
-            FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).first?.path,
-            "/Applications/Setapp"
-        ].compactMap { $0 }
+        // Only discover apps once per session
+        guard !hasDiscoveredApps else { return }
 
-        var foundBundleIDs: Set<String> = []
+        Task.detached { [weak self] in
+            guard let self = self else { return }
 
-        for dirPath in appDirectories {
-            guard let urls = FileManager.default.enumerator(at: URL(fileURLWithPath: dirPath), includingPropertiesForKeys: nil)?.compactMap({ $0 as? URL }) else {
-                continue
-            }
+            var apps: [AppEntry] = []
+            let appDirectories = [
+                FileManager.default.urls(for: .applicationDirectory, in: .localDomainMask).first?.path,
+                FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask).first?.path,
+                "/Applications/Setapp"
+            ].compactMap { $0 }
 
-            for url in urls where url.pathExtension == "app" {
-                guard let bundle = Bundle(url: url),
-                      let bundleID = bundle.bundleIdentifier,
-                      !foundBundleIDs.contains(bundleID) else {
+            var foundBundleIDs: Set<String> = []
+
+            for dirPath in appDirectories {
+                guard let urls = FileManager.default.enumerator(at: URL(fileURLWithPath: dirPath), includingPropertiesForKeys: nil)?.compactMap({ $0 as? URL }) else {
                     continue
                 }
 
-                let name = bundle.infoDictionary?["CFBundleName"] as? String
-                    ?? bundle.infoDictionary?["CFBundleDisplayName"] as? String
-                    ?? url.deletingPathExtension().lastPathComponent
+                for url in urls where url.pathExtension == "app" {
+                    guard let bundle = Bundle(url: url),
+                          let bundleID = bundle.bundleIdentifier,
+                          !foundBundleIDs.contains(bundleID) else {
+                        continue
+                    }
 
-                foundBundleIDs.insert(bundleID)
-                apps.append(AppEntry(bundleID: bundleID, displayName: name, path: url.path))
+                    let name = bundle.infoDictionary?["CFBundleName"] as? String
+                        ?? bundle.infoDictionary?["CFBundleDisplayName"] as? String
+                        ?? url.deletingPathExtension().lastPathComponent
+
+                    foundBundleIDs.insert(bundleID)
+                    apps.append(AppEntry(bundleID: bundleID, displayName: name, path: url.path))
+                }
             }
-        }
 
-        // Fallback to common apps if no apps found
-        if apps.isEmpty {
-            for bundleID in commonApps {
-                if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
-                    if let bundle = Bundle(url: url) {
-                        let name = bundle.infoDictionary?["CFBundleName"] as? String
-                            ?? bundle.infoDictionary?["CFBundleDisplayName"] as? String
-                            ?? (bundleID as NSString).lastPathComponent.replacingOccurrences(of: ".app", with: "")
+            // Fallback to common apps if no apps found
+            if apps.isEmpty {
+                for bundleID in self.commonApps {
+                    if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
+                        if let bundle = Bundle(url: url) {
+                            let name = bundle.infoDictionary?["CFBundleName"] as? String
+                                ?? bundle.infoDictionary?["CFBundleDisplayName"] as? String
+                                ?? (bundleID as NSString).lastPathComponent.replacingOccurrences(of: ".app", with: "")
 
-                        apps.append(AppEntry(bundleID: bundleID, displayName: name, path: url.path))
+                            apps.append(AppEntry(bundleID: bundleID, displayName: name, path: url.path))
+                        }
                     }
                 }
             }
-        }
 
-        discoveredApps = apps.sorted { $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending }
+            let sortedApps = apps.sorted { $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending }
+
+            await MainActor.run {
+                self.discoveredApps = sortedApps
+                self.hasDiscoveredApps = true
+            }
+        }
     }
 
     func addFavorite(_ bundleID: String) {
