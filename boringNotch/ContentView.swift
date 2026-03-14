@@ -94,8 +94,10 @@ struct ContentView: View {
                     .frame(alignment: .top)
             .overlay(
                 // Claude Tasks island overlay for closed notch notifications
-                if Defaults[.claudeTasksEnabled] {
-                    ClaudeTasksOverlay()
+                Group {
+                    if Defaults[.claudeTasksEnabled] {
+                        ClaudeTasksOverlay()
+                    }
                 }
             )
                     .padding(
@@ -105,7 +107,7 @@ struct ContentView: View {
                         ? (cornerRadiusInsets.opened.top) : (cornerRadiusInsets.opened.bottom)
                         : cornerRadiusInsets.closed.bottom
                     )
-                    .padding([.horizontal, .bottom], vm.notchState == .open ? 12 : 0)
+                    .padding(.horizontal, vm.notchState == .open ? 12 : 0)
                     .background(.black)
                     .clipShape(currentNotchShape)
                     .overlay(alignment: .top) {
@@ -206,7 +208,6 @@ struct ContentView: View {
                 }
             }
         }
-        .padding(.bottom, 8)
         .frame(maxWidth: windowSize.width, maxHeight: windowSize.height, alignment: .top)
         .compositingGroup()
         .scaleEffect(
@@ -248,7 +249,7 @@ struct ContentView: View {
 
     @ViewBuilder
     func NotchLayout() -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading) {
                 if coordinator.helloAnimationRunning {
                     Spacer()
@@ -370,6 +371,8 @@ struct ContentView: View {
                         NotchHomeView(albumArtNamespace: albumArtNamespace)
                     case .shelf:
                         ShelfView()
+                    case .apps:
+                        AppsView()
                     }
                 }
                 .transition(
