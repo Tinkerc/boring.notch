@@ -1628,6 +1628,42 @@ struct Advanced: View {
             } header: {
                 Text("Window Behavior")
             }
+
+            Section {
+                Defaults.Toggle(key: .claudeTasksEnabled) {
+                    Text("Enable Claude Tasks monitor")
+                }
+                Stepper(
+                    value: Binding(
+                        get: { Defaults[.claudeTasksRefreshInterval] },
+                        set: { Defaults[.claudeTasksRefreshInterval] = $0 }
+                    ),
+                    in: 2...30, step: 1
+                ) {
+                    Text("Refresh interval: \(Int(Defaults[.claudeTasksRefreshInterval]))s")
+                }
+                Defaults.Toggle(key: .claudeTasksShowAnimation) {
+                    Text("Show state change animations")
+                }
+                Picker("Open directories with", selection: Binding(
+                    get: { Defaults[.claudeTasksOpenWith] },
+                    set: { Defaults[.claudeTasksOpenWith] = $0 }
+                )) {
+                    Text("Surf").tag(ClaudeTasksOpenWith.surf)
+                    Text("Finder").tag(ClaudeTasksOpenWith.finder)
+                    Text("VS Code").tag(ClaudeTasksOpenWith.vscode)
+                }
+            } header: {
+                HStack {
+                    Text("Claude Code")
+                    customBadge(text: "New")
+                }
+            } footer: {
+                Text("Monitor Claude Code agent tasks from the notch. Tasks are fetched from ~/.claude/workspace/tasks/ every few seconds.")
+                    .multilineTextAlignment(.leading)
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            }
         }
         .accentColor(.effectiveAccent)
         .navigationTitle("Advanced")
