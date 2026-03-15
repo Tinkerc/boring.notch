@@ -992,133 +992,15 @@ struct Appearance: View {
             }
 
             Section {
-                List {
-                    ForEach(customVisualizers, id: \.self) { visualizer in
-                        HStack {
-                            LottieView(
-                                url: visualizer.url, speed: visualizer.speed,
-                                loopMode: .loop
-                            )
-                            .frame(width: 30, height: 30, alignment: .center)
-                            Text(visualizer.name)
-                            Spacer(minLength: 0)
-                            if selectedVisualizer == visualizer {
-                                Text("selected")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
-                                    .foregroundStyle(.secondary)
-                                    .padding(.trailing, 8)
-                            }
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .padding(.vertical, 2)
-                        .background(
-                            selectedListVisualizer != nil
-                                ? selectedListVisualizer == visualizer
-                                    ? Color.effectiveAccent : Color.clear : Color.clear,
-                            in: RoundedRectangle(cornerRadius: 5)
-                        )
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            if selectedListVisualizer == visualizer {
-                                selectedListVisualizer = nil
-                                return
-                            }
-                            selectedListVisualizer = visualizer
-                        }
-                    }
-                }
-                .safeAreaPadding(
-                    EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
+                CustomVisualizerListView(
+                    customVisualizers: $customVisualizers,
+                    selectedVisualizer: selectedVisualizer,
+                    selectedListVisualizer: $selectedListVisualizer,
+                    isPresented: $isPresented,
+                    name: $name,
+                    url: $url,
+                    speed: $speed
                 )
-                .frame(minHeight: 120)
-                .actionBar {
-                    HStack(spacing: 5) {
-                        Button {
-                            name = ""
-                            url = ""
-                            speed = 1.0
-                            isPresented.toggle()
-                        } label: {
-                            Image(systemName: "plus")
-                                .foregroundStyle(.secondary)
-                                .contentShape(Rectangle())
-                        }
-                        Divider()
-                        Button {
-                            if selectedListVisualizer != nil {
-                                let visualizer = selectedListVisualizer!
-                                selectedListVisualizer = nil
-                                customVisualizers.remove(
-                                    at: customVisualizers.firstIndex(of: visualizer)!)
-                                if visualizer == selectedVisualizer && customVisualizers.count > 0 {
-                                    selectedVisualizer = customVisualizers[0]
-                                }
-                            }
-                        } label: {
-                            Image(systemName: "minus")
-                                .foregroundStyle(.secondary)
-                                .contentShape(Rectangle())
-                        }
-                    }
-                }
-                .controlSize(.small)
-                .buttonStyle(PlainButtonStyle())
-                .overlay {
-                    if customVisualizers.isEmpty {
-                        Text("No custom visualizer")
-                            .foregroundStyle(Color(.secondaryLabelColor))
-                            .padding(.bottom, 22)
-                    }
-                }
-                .sheet(isPresented: $isPresented) {
-                    VStack(alignment: .leading) {
-                        Text("Add new visualizer")
-                            .font(.largeTitle.bold())
-                            .padding(.vertical)
-                        TextField("Name", text: $name)
-                        TextField("Lottie JSON URL", text: $url)
-                        HStack {
-                            Text("Speed")
-                            Spacer(minLength: 80)
-                            Text("\(speed, specifier: "%.1f")s")
-                                .multilineTextAlignment(.trailing)
-                                .foregroundStyle(.secondary)
-                            Slider(value: $speed, in: 0...2, step: 0.1)
-                        }
-                        .padding(.vertical)
-                        HStack {
-                            Button {
-                                isPresented.toggle()
-                            } label: {
-                                Text("Cancel")
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                            }
-
-                            Button {
-                                let visualizer: CustomVisualizer = .init(
-                                    UUID: UUID(),
-                                    name: name,
-                                    url: URL(string: url)!,
-                                    speed: speed
-                                )
-
-                                if !customVisualizers.contains(visualizer) {
-                                    customVisualizers.append(visualizer)
-                                }
-
-                                isPresented.toggle()
-                            } label: {
-                                Text("Add")
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                            }
-                            .buttonStyle(BorderedProminentButtonStyle())
-                        }
-                    }
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .controlSize(.extraLarge)
-                    .padding()
-                }
             } header: {
                 HStack(spacing: 0) {
                     Text("Custom vizualizers (Lottie)")
@@ -1543,4 +1425,195 @@ func warningBadge(_ text: String, _ description: String) -> some View {
 
 #Preview {
     HUD()
+}
+
+// MARK: - Custom Visualizer List Components
+
+struct CustomVisualizerListView: View {
+    @Binding var customVisualizers: [CustomVisualizer]
+    let selectedVisualizer: CustomVisualizer?
+    @Binding var selectedListVisualizer: CustomVisualizer?
+    @Binding var isPresented: Bool
+    @Binding var name: String
+    @Binding var url: String
+    @Binding var speed: CGFloat
+
+    var body: some View {
+        List {
+            ForEach(customVisualizers, id: \.self) { visualizer in
+                CustomVisualizerRow(
+                    visualizer: visualizer,
+                    isSelected: selectedVisualizer == visualizer,
+                    isListSelected: selectedListVisualizer == visualizer
+                )
+                .onTapGesture {
+                    if selectedListVisualizer == visualizer {
+                        selectedListVisualizer = nil
+                    } else {
+                        selectedListVisualizer = visualizer
+                    }
+                }
+            }
+        }
+        .safeAreaPadding(
+            EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
+        )
+        .frame(minHeight: 120)
+        .actionBar {
+            CustomVisualizerActionBar(
+                selectedListVisualizer: $selectedListVisualizer,
+                customVisualizers: $customVisualizers,
+                isPresented: $isPresented,
+                name: $name,
+                url: $url,
+                speed: $speed
+            )
+        }
+        .controlSize(.small)
+        .buttonStyle(PlainButtonStyle())
+        .overlay {
+            if customVisualizers.isEmpty {
+                Text("No custom visualizer")
+                    .foregroundStyle(Color(.secondaryLabelColor))
+                    .padding(.bottom, 22)
+            }
+        }
+        .sheet(isPresented: $isPresented) {
+            AddVisualizerSheet(
+                name: $name,
+                url: $url,
+                speed: $speed,
+                isPresented: $isPresented,
+                customVisualizers: $customVisualizers
+            )
+        }
+    }
+}
+
+struct CustomVisualizerRow: View {
+    let visualizer: CustomVisualizer
+    let isSelected: Bool
+    let isListSelected: Bool
+
+    var body: some View {
+        HStack {
+            LottieView(
+                url: visualizer.url, speed: visualizer.speed,
+                loopMode: .loop
+            )
+            .frame(width: 30, height: 30, alignment: .center)
+            Text(visualizer.name)
+            Spacer(minLength: 0)
+            if isSelected {
+                Text("selected")
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.secondary)
+                    .padding(.trailing, 8)
+            }
+        }
+        .buttonStyle(PlainButtonStyle())
+        .padding(.vertical, 2)
+        .background(
+            isListSelected ? Color.effectiveAccent : Color.clear,
+            in: RoundedRectangle(cornerRadius: 5)
+        )
+        .contentShape(Rectangle())
+    }
+}
+
+struct CustomVisualizerActionBar: View {
+    @Binding var selectedListVisualizer: CustomVisualizer?
+    @Binding var customVisualizers: [CustomVisualizer]
+    @Binding var isPresented: Bool
+    @Binding var name: String
+    @Binding var url: String
+    @Binding var speed: CGFloat
+
+    var body: some View {
+        HStack(spacing: 5) {
+            Button {
+                name = ""
+                url = ""
+                speed = 1.0
+                isPresented.toggle()
+            } label: {
+                Image(systemName: "plus")
+                    .foregroundStyle(.secondary)
+                    .contentShape(Rectangle())
+            }
+
+            Divider()
+
+            Button {
+                if let visualizer = selectedListVisualizer {
+                    selectedListVisualizer = nil
+                    if let index = customVisualizers.firstIndex(of: visualizer) {
+                        customVisualizers.remove(at: index)
+                    }
+                }
+            } label: {
+                Image(systemName: "minus")
+                    .foregroundStyle(.secondary)
+                    .contentShape(Rectangle())
+            }
+        }
+    }
+}
+
+struct AddVisualizerSheet: View {
+    @Binding var name: String
+    @Binding var url: String
+    @Binding var speed: CGFloat
+    @Binding var isPresented: Bool
+    @Binding var customVisualizers: [CustomVisualizer]
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Add new visualizer")
+                .font(.largeTitle.bold())
+                .padding(.vertical)
+            TextField("Name", text: $name)
+            TextField("Lottie JSON URL", text: $url)
+            HStack {
+                Text("Speed")
+                Spacer(minLength: 80)
+                Text("\(speed, specifier: "%.1f")s")
+                    .multilineTextAlignment(.trailing)
+                    .foregroundStyle(.secondary)
+                Slider(value: $speed, in: 0...2, step: 0.1)
+            }
+            .padding(.vertical)
+            HStack {
+                Button {
+                    isPresented.toggle()
+                } label: {
+                    Text("Cancel")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+
+                Button {
+                    let visualizer = CustomVisualizer(
+                        id: UUID().uuidString,
+                        name: name,
+                        url: URL(string: url)!,
+                        speed: speed
+                    )
+
+                    if !customVisualizers.contains(where: { $0.id == visualizer.id }) {
+                        customVisualizers.append(visualizer)
+                    }
+
+                    isPresented.toggle()
+                } label: {
+                    Text("Add")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+            }
+        }
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .controlSize(.extraLarge)
+        .padding()
+    }
 }

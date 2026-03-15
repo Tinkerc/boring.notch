@@ -101,7 +101,43 @@ extension Defaults.Keys {
     static let customAccentColorData = Key<Data?>("customAccentColorData", default: nil)
     // Show or hide the title bar
     static let hideTitleBar = Key<Bool>("hideTitleBar", default: true)
-    
+
+    // MARK: Stub Keys (App Slimming - legacy references)
+    static let selectedVisualizer = Key<CustomVisualizer?>("selectedVisualizer", default: nil)
+    static let inlineHUD = Key<Bool>("inlineHUD", default: false)
+    static let enableGradient = Key<Bool>("enableGradient", default: false)
+    static let optionKeyAction = Key<OptionKeyAction>("optionKeyAction", default: .none)
+    static let hudReplacement = Key<Bool>("hudReplacement", default: false)
+
+    // Calendar stubs (removed with Calendar module)
+    static let showCalendar = Key<Bool>("showCalendar", default: false)
+    static let hideCompletedReminders = Key<Bool>("hideCompletedReminders", default: true)
+    static let hideAllDayEvents = Key<Bool>("hideAllDayEvents", default: true)
+    static let autoScrollToNextEvent = Key<Bool>("autoScrollToNextEvent", default: true)
+    static let showFullEventTitles = Key<Bool>("showFullEventTitles", default: false)
+
+    // Shelf stubs (to be removed)
+    static let shelfTapToOpen = Key<Bool>("shelfTapToOpen", default: false)
+    static let expandedDragDetection = Key<Bool>("expandedDragDetection", default: false)
+    static let boringShelf = Key<Bool>("boringShelf", default: true)
+    static let openShelfByDefault = Key<Bool>("openShelfByDefault", default: true)
+    static let copyOnDrag = Key<Bool>("copyOnDrag", default: true)
+    static let autoRemoveShelfItems = Key<Bool>("autoRemoveShelfItems", default: false)
+    static let favoriteApps = Key<[String]>("favoriteApps", default: [])
+
+    // Visualizer stubs
+    static let useMusicVisualizer = Key<Bool>("useMusicVisualizer", default: false)
+    static let customVisualizers = Key<[CustomVisualizer]>("customVisualizers", default: [])
+
+    // System event indicator stubs
+    static let systemEventIndicatorShadow = Key<Bool>("systemEventIndicatorShadow", default: true)
+    static let systemEventIndicatorUseAccent = Key<Bool>("systemEventIndicatorUseAccent", default: true)
+
+    // Open Notch HUD stubs
+    static let showOpenNotchHUD = Key<Bool>("showOpenNotchHUD", default: false)
+    static let showOpenNotchHUDPercentage = Key<Bool>("showOpenNotchHUDPercentage", default: false)
+    static let showClosedNotchHUDPercentage = Key<Bool>("showClosedNotchHUDPercentage", default: false)
+
     // Helper to determine the default media controller based on NowPlaying deprecation status
     static var defaultMediaController: MediaControllerType {
         if MusicManager.shared.isNowPlayingDeprecated {
@@ -112,4 +148,26 @@ extension Defaults.Keys {
     }
 
     static let didClearLegacyURLCacheV1 = Key<Bool>("didClearLegacyURLCache_v1", default: false)
+}
+
+// MARK: - Supporting Types for Stub Keys
+
+struct VisualizerConfig: Codable, Hashable, Defaults.Serializable {
+    let url: URL
+    let speed: Double
+}
+
+enum OptionKeyAction: String, CaseIterable, Identifiable, Codable, Defaults.Serializable {
+    case openSettings
+    case showHUD
+    case none
+
+    var id: String { self.rawValue }
+}
+
+struct CustomVisualizer: Codable, Hashable, Defaults.Serializable {
+    let id: String
+    let name: String
+    let url: URL
+    let speed: Double
 }

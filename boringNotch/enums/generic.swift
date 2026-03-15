@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Defaults
 
 public enum Style {
     case notch
@@ -32,4 +33,10 @@ enum SettingsEnum {
     case general
     case about
     case mediaPlayback
+}
+
+enum HideNotchOption: String, Defaults.Serializable, Equatable {
+    case always
+    case nowPlayingOnly
+    case never
 }
