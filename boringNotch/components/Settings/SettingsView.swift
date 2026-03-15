@@ -537,8 +537,6 @@ struct Media: View {
     @Default(.mediaController) var mediaController
     @ObservedObject var coordinator = BoringViewCoordinator.shared
     @Default(.hideNotchOption) var hideNotchOption
-    @Default(.enableSneakPeek) private var enableSneakPeek
-    @Default(.sneakPeekStyles) var sneakPeekStyles
 
     var body: some View {
         Form {
@@ -557,34 +555,14 @@ struct Media: View {
             } header: {
                 Text("Media Source")
             } footer: {
-                if MusicManager.shared.isNowPlayingDeprecated {
-                    HStack {
-                        Text("YouTube Music requires this third-party app to be installed: ")
-                            .foregroundStyle(.secondary)
-                            .font(.caption)
-                        Link(
-                            "https://github.com/pear-devs/pear-desktop",
-                            destination: URL(string: "https://github.com/pear-devs/pear-desktop")!
-                        )
-                        .font(.caption)
-                        .foregroundColor(.blue)  // Ensures it's visibly a link
-                    }
-                } else {
-                    Text(
-                        "'Now Playing' was the only option on previous versions and works with all media apps."
-                    )
-                    .foregroundStyle(.secondary)
-                    .font(.caption)
-                }
+                Text(
+                    "'Now Playing' works with all media apps. 'Apple Music' provides native integration."
+                )
+                .foregroundStyle(.secondary)
+                .font(.caption)
             }
             
             Section {
-                Toggle("Show sneak peek on playback changes", isOn: $enableSneakPeek)
-                Picker("Sneak Peek Style", selection: $sneakPeekStyles) {
-                    ForEach(SneakPeekStyle.allCases) { style in
-                        Text(style.rawValue).tag(style)
-                    }
-                }
                 HStack {
                     Stepper(value: $waitInterval, in: 0...10, step: 1) {
                         HStack {

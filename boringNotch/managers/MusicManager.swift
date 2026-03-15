@@ -182,9 +182,6 @@ class MusicManager: ObservableObject {
                 self.updateIdleState(state: state.isPlaying)
             }
 
-            if state.isPlaying && !state.title.isEmpty && !state.artist.isEmpty {
-                self.updateSneakPeek()
-            }
         }
 
         // Check for changes in track metadata using last artwork change values
@@ -220,10 +217,6 @@ class MusicManager: ObservableObject {
                 self.lastArtworkBundleIdentifier = state.bundleIdentifier
             }
 
-            // Only update sneak peek if there's actual content and something changed
-            if !state.title.isEmpty && !state.artist.isEmpty && state.isPlaying {
-                self.updateSneakPeek()
-            }
         }
 
         let timeChanged = state.currentTime != self.elapsedTime
@@ -404,10 +397,6 @@ class MusicManager: ObservableObject {
                 }
             }
         }
-    }
-
-    private func updateSneakPeek() {
-        // Sneak peek functionality removed as part of app slimming
     }
 
     // MARK: - Public Methods for controlling playback
