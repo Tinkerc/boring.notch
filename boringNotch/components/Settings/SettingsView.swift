@@ -39,9 +39,6 @@ struct SettingsView: View {
                 NavigationLink(value: "Calendar") {
                     Label("Calendar", systemImage: "calendar")
                 }
-                NavigationLink(value: "HUD") {
-                    Label("HUDs", systemImage: "dial.medium.fill")
-                }
                 NavigationLink(value: "Battery") {
                     Label("Battery", systemImage: "battery.100.bolt")
                 }
@@ -82,8 +79,6 @@ struct SettingsView: View {
                     Media()
                 case "Calendar":
                     CalendarSettings()
-                case "HUD":
-                    HUD()
                 case "Battery":
                     Charge()
                 case "Shelf":
@@ -1235,7 +1230,7 @@ func warningBadge(_ text: String, _ description: String) -> some View {
 }
 
 #Preview {
-    HUD()
+    SettingsView()
 }
 
 // MARK: - Custom Visualizer List Components
