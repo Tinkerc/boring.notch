@@ -123,9 +123,11 @@ extension NSItemProvider {
                         }
                     }
                     if resolvedURL == nil {
-                        // Fallback: try treating the data as a bookmark
-                        let bookmark = Bookmark(data: data)
-                        resolvedURL = bookmark.resolveURL()
+                        // Fallback: try treating the data as a file URL string
+                        if let string = String(data: data, encoding: .utf8),
+                           let url = URL(string: string) {
+                            resolvedURL = url
+                        }
                     }
                 } else if let string = item as? String {
                     if let url = URL(string: string) {

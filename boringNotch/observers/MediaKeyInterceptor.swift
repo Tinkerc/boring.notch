@@ -197,61 +197,17 @@ final class MediaKeyInterceptor {
     }
 
     private func handleKeyPress(keyType: NXKeyType, option: Bool, shift: Bool, command: Bool) {
-        let stepDivisor: Float = (option && shift) ? 4.0 : 1.0
-        
-        switch keyType {
-        case .soundUp:
-            Task { @MainActor in
-                self.playFeedbackSound()
-                VolumeManager.shared.increase(stepDivisor: stepDivisor)
-            }
-        case .soundDown:
-            Task { @MainActor in
-                self.playFeedbackSound()
-                VolumeManager.shared.decrease(stepDivisor: stepDivisor)
-            }
-        case .mute:
-            Task { @MainActor in
-                VolumeManager.shared.toggleMuteAction()
-            }
-        case .brightnessUp, .keyboardBrightnessUp:
-            let delta = step / stepDivisor
-            adjustBrightness(delta: delta, keyboard: keyType == .keyboardBrightnessUp || command)
-        case .brightnessDown, .keyboardBrightnessDown:
-            let delta = -(step / stepDivisor)
-            adjustBrightness(delta: delta, keyboard: keyType == .keyboardBrightnessDown || command)
-        }
+        // Volume and brightness management removed as part of app slimming
+        // Media keys are now handled by system default behavior
     }
-    
+
     private func adjustBrightness(delta: Float, keyboard: Bool) {
-        Task { @MainActor in
-            if keyboard {
-                KeyboardBacklightManager.shared.setRelative(delta: delta)
-            } else {
-                BrightnessManager.shared.setRelative(delta: delta)
-            }
-        }
+        // Brightness management removed as part of app slimming
     }
-    
+
     private func showHUD(for keyType: NXKeyType, command: Bool) {
-        Task { @MainActor in
-            switch keyType {
-            case .soundUp, .soundDown, .mute:
-                let v = VolumeManager.shared.rawVolume
-                BoringViewCoordinator.shared.toggleSneakPeek(status: true, type: .volume, value: CGFloat(v))
-            case .brightnessUp, .brightnessDown:
-                if command {
-                    let v = KeyboardBacklightManager.shared.rawBrightness
-                    BoringViewCoordinator.shared.toggleSneakPeek(status: true, type: .backlight, value: CGFloat(v))
-                } else {
-                    let v = BrightnessManager.shared.rawBrightness
-                    BoringViewCoordinator.shared.toggleSneakPeek(status: true, type: .brightness, value: CGFloat(v))
-                }
-            case .keyboardBrightnessUp, .keyboardBrightnessDown:
-                let v = KeyboardBacklightManager.shared.rawBrightness
-                BoringViewCoordinator.shared.toggleSneakPeek(status: true, type: .backlight, value: CGFloat(v))
-            }
-        }
+        // HUD replacement removed as part of app slimming
+        // System HUD will be shown by default
     }
     
     private func openSystemSettings(for keyType: NXKeyType, command: Bool) {
