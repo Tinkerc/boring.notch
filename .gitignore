@@ -53,3 +53,7 @@ build/
 *.xcarchive
 *.dSYM
 
+# Environment files
+.env
+.env.*
+
